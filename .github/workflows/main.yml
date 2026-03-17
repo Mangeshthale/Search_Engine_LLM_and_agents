@@ -2,8 +2,6 @@ name: Sync to Hugging Face hub
 on:
   push:
     branches: [main]
-
-  # to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -14,7 +12,10 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
-      - name: Push to hub
+
+      - name: Push to Hugging Face
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://Mangesh1:$HF_TOKEN@huggingface.co/spaces/Mangesh1/search_engine_llm main
+        run: |
+          git remote add hf https://Mangesh1:${HF_TOKEN}@huggingface.co/spaces/Mangesh1/search_engine_llm
+          git push hf main --force

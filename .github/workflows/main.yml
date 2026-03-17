@@ -13,6 +13,18 @@ jobs:
           fetch-depth: 0
           lfs: true
 
+      # ADD THIS STEP FIRST
+      - name: Check token
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          if [ -z "${HF_TOKEN}" ]; then
+            echo "ERROR: HF_TOKEN is empty"
+            exit 1
+          else
+            echo "Token is set, length: ${#HF_TOKEN}"
+          fi
+
       - name: Push to Hugging Face
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
